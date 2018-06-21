@@ -1,5 +1,4 @@
 /*
-
   Test Layout Of an imaginary learning site.
   (C) 2018 Martin Østergaard / All right reserved
   Free license as long as visiable credits are given.
@@ -68,22 +67,19 @@ h2 {
 .tablemenu :visited 
 {
   color:white;
-  text-outline:none;
+  /* text-outline:none; */
 }
 .tablemenu :link {
   font-weight: bold;
   text-decoration: none;
   color:white;
-  text-outline:none;
+  /* text-outline:none; */
 }
 
 
 .tablemenu td:hover {
   background-color:orange;
 }
-
-
-
 
 #greyText {
   color: grey;
