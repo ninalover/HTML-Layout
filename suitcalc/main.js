@@ -14,7 +14,7 @@ var originY= 100;
 var originX= 200;
 var fontWidth=null; // ctx.measureText("0").width;
 var fontSpace=null; // ctx.measureText(" ").width;
-var fontHeight=32;
+var fontHeight=26;
 var curWidth=0; //fontWidth;
 var curHeight=0; //fontHeight-2;
 var suit = [];
@@ -22,7 +22,8 @@ var minXCurPos=0;
 var maxXCurPos=0;
 var minYCurPos=0;
 var maxYCurPos=0;
-
+var fontType="32px Zebri";
+var fontTypeBold="bold 32px Zebri";
 
 
 
@@ -31,10 +32,12 @@ function init () {
 canvas = document.getElementById("myCanvas");
 ctx = canvas.getContext("2d");
 
-ctx.font = "bold 32px Zebri";
+ctx.font = fontTypeBold;
 ctx.fillStyle="black";
 fontWidth=ctx.measureText("0").width;
 fontSpace=ctx.measureText(" ").width;
+
+console.log ("fontspace"+" "+fontHeight)
 curWidth=fontWidth;
 curHeight=fontHeight-2;  
 // suit = [];
@@ -57,22 +60,29 @@ document.getElementById('myCanvas').addEventListener('keypress', MoveCursor);
 
 }
 
+function DrawAttribNames () 
+{
+  // Phy, fire, cold,poison,energy, si,mi,lmc,dci,hci,di,dex,str,int,lrc,cf,de,pe,fc,fcr
+  let names = ["PHY","FIR","CLD","POI","ENE","STA","MAN","LMC","LRC","DCI","HCI","DAM","DEX","STR","INT","CAF","DAE","PHE","FIE","COE","POE","ENE","FAC","FCR","LUC","EHP"]
+  ctx.font="16px Zebri bold";
+  for (let c=0;c<names.length;c++) {
+    ctx.fillText(names[c],(originX)+(c*(fontWidth+fontWidth+fontSpace)),68); 
+  }
+}
 
 
 
 function DrawAll () 
 {
-  
-  
-
-
-ctx.clearRect(0, 0, canvas.width, canvas.height);
+ ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 
   DrawCursor (); //window.ctx,"darkred",window.originX+1, window.originY+1, window.curWidth, window.curHeight,window.curPosX,window.curPosY);
 //this.DrawSuit();
+DrawAttribNames();
 
-  for (let c=0;c<suit.length;c++) {
+
+for (let c=0;c<suit.length;c++) {
     suit[c].DrawAttrib();
     suit[c].DrawName();
   }
@@ -81,7 +91,7 @@ ctx.clearRect(0, 0, canvas.width, canvas.height);
 function DrawCursor () {
   let drawX = 0;
   let drawY =0;
-  let curSpace=11;
+//  let curSpace=11;
   let spaceX=0;
 //  curPosX=1;
 //  curPosY=0;
@@ -89,14 +99,14 @@ function DrawCursor () {
   //var ctx = canvas.getContext("2d");
    
 
-  spaceX = Math.trunc (window.curPosX/2)*(window.curWidth+window.curWidth+curSpace);
+  spaceX = Math.trunc (window.curPosX/2)*(window.curWidth+window.curWidth+fontSpace);
   if ((window.curPosX&1)==0) { //even
     drawX=window.originX+spaceX;  
   }else { // odd
     drawX=window.originX+spaceX+window.curWidth;
   }
   drawY = (window.originY+(window.curPosY*window.curHeight)-window.curHeight);
-  drawY+=(curPosY*2)+4;
+  drawY+=(curPosY*2);
 
   
   window.ctx.fillStyle="black";
@@ -112,7 +122,15 @@ function Part (name,y)
 {
   this.name=name;
   
-  this.Attrib =      ["00",   "00",   "00",   "00",   "00"];
+  this.Attrib =      ["00",   "00",   "00",   "00",   "00",
+                      "00",   "00",   "00",   "00",   "00",
+                      "00",   "00",   "00",   "00",   "00",
+                      "00",   "00",   "00",   "00",   "00",
+                      "00",   "00",   "00",   "00",   "00",
+                      "00" ];
+                      
+  
+  
   this.AttribColors= ["grey","orange","lightblue","green","purple"];
   //this.xCoord = x;
   this.yCoord = y;  
@@ -120,7 +138,7 @@ function Part (name,y)
   this.DrawAttrib = function ()
   {
     ctx.fillStyle = "black";
-    ctx.font = "bold 32px Zebri";
+    ctx.font = fontTypeBold;
     for (let c=0;c<this.Attrib.length;c++) 
     {
       ctx.fillStyle=this.AttribColors[c];  
@@ -130,7 +148,7 @@ function Part (name,y)
     }
   }
   this.DrawName = function () {
-    ctx.font = "32px Zebri bold";
+    ctx.font = fontType;
     ctx.fillStyle="black";
     ctx.fillText(name,originX-200,this.yCoord);
 
